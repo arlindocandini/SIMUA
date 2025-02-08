@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ocorrências</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            display: flex;
+            background-color: #f4f4f4;
+            height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background: #0a2a18;
+            color: white;
+            padding: 20px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .sidebar a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            margin: 20px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #1b4428;
+            color: white;
+        }
+        td img {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+        }
+        .status {
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+        }
+        .status-urgente { background-color: yellow; color: black; }
+        .status-emergencia { background-color: red; }
+        .status-pouco-urgente { background-color: green; }
+        .status-nao-urgente { background-color: blue; }
+        .status-indefinido { background-color: gray; }
+        .button {
+            padding: 8px 12px;
+            background-color: #1b4428;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #0a2a18;
+        }
+
+        /* Estilização do Modal */
+        .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    
+    .modal-content {
+        background-color: white;
+        width: 40%;
+        margin: 10% auto;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .modal-body {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group label {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    input, select, textarea {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    textarea {
+        resize: none;
+    }
+
+    .modal-footer {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 15px;
+    }
+
+    .btn-confirm {
+        background-color: green;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .btn-cancel {
+        background-color: red;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .btn-confirm:hover, .btn-cancel:hover {
+        opacity: 0.8;
+    }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Prefeitura</h2>
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('index') }}">Ocorrências</a>
+        <a href="{{ url_for('ordens') }}">Ordens de Serviços (OS)</a>
+        <a href="#">Perfil</a>
+        <a href="#">Cadastrar Usuários</a>
+        <a href="#">Imprimir Relatórios</a>
+    </div>
+
+    <div class="main-content">
+        <div class="header">Ocorrências</div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Captura</th>
+                        <th>Localização</th>
+                        <th>ID</th>
+                        <th>Categoria</th>
+                        <th>Status</th>
+                        <th>Data de Registro</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for img in imagens %}
+                    <tr>
+                        <td><img src="{{ url_for('buraco_urgente', filename=img.arquivo) }}" alt="Ocorrência"></td>
+                        <td>{{ img.localizacao }}</td>
+                        <td>{{ img.id }}</td>
+                        <td>{{ img.categoria }}</td>
+                        <td class="status" style="background-color: {{ img.cor_status }};">{{ img.status }}</td>
+                        <td>{{ img.data }}</td>
+                        <td><button class="button" onclick="abrirModal('{{ img.localizacao }}', '{{ img.categoria }}', '{{ img.status }}')">Gerar OS</button></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+<!-- Modal (Popup) para Criar OS -->
+<div id="modalOS" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title">🛠 Nova Ordem de Serviço</span>
+            <span class="close" onclick="fecharModal()">✖</span>
+        </div>
+        <div class="modal-body">
+            <form id="formOS">
+                <div class="form-group">
+                    <label>📍 Localização:</label>
+                    <input type="text" id="osLocalizacao" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>📌 Categoria:</label>
+                    <input type="text" id="osCategoria" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>🚦 Status:</label>
+                    <select id="osStatus">
+                        <option value="Emergência">🔴 Emergência</option>
+                        <option value="Urgente">🟡 Urgente</option>
+                        <option value="Pouco Urgente">🟢 Pouco Urgente</option>
+                        <option value="Não Urgente">🔵 Não Urgente</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>👤 Responsável:</label>
+                    <input type="text" id="osResponsavel" required>
+                </div>
+
+                <div class="form-group">
+                    <label>📆 Prazo:</label>
+                    <input type="date" id="osPrazo" required>
+                </div>
+
+                <div class="form-group">
+                    <label>🛠 Equipe Responsável:</label>
+                    <select id="osEquipe">
+                        <option value="Manutenção">🔧 Manutenção</option>
+                        <option value="Elétrica">⚡ Elétrica</option>
+                        <option value="Infraestrutura">🏗️ Infraestrutura</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>⚠️ Prioridade:</label>
+                    <select id="osPrioridade">
+                        <option value="Alta">🔥 Alta</option>
+                        <option value="Média">⚠️ Média</option>
+                        <option value="Baixa">💡 Baixa</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>📝 Observações:</label>
+                    <textarea id="osObservacoes"></textarea>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-confirm" onclick="salvarOS()">✅ Criar OS</button>
+            <button class="btn-cancel" onclick="fecharModal()">❌ Cancelar</button>
+        </div>
+    </div>
+</div>
+
+    <script>
+    function abrirModal(localizacao, categoria, status) {
+        document.getElementById("osLocalizacao").value = localizacao;
+        document.getElementById("osCategoria").value = categoria;
+        document.getElementById("osStatus").value = status;
+        document.getElementById("modalOS").style.display = "block";
+    }
+
+    function fecharModal() {
+        document.getElementById("modalOS").style.display = "none";
+    }
+
+    function salvarOS() {
+        const osData = {
+            localizacao: document.getElementById("osLocalizacao").value,
+            categoria: document.getElementById("osCategoria").value,
+            status: document.getElementById("osStatus").value,
+            responsavel: document.getElementById("osResponsavel").value,
+            prazo: document.getElementById("osPrazo").value,
+            equipe: document.getElementById("osEquipe").value,
+            prioridade: document.getElementById("osPrioridade").value,
+            observacoes: document.getElementById("osObservacoes").value
+        };
+
+        fetch("/salvar_os", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(osData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert("Ordem de Serviço criada com sucesso!");
+            fecharModal();  // Fecha o popup
+            window.location.href = "/ordens"; // Redireciona para a página de ordens
+        })
+        .catch(error => console.error("Erro ao salvar OS:", error));
+    }
+    </script>
+</body>
+</html>
