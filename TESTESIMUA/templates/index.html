@@ -216,7 +216,7 @@
                 <tbody>
                     {% for img in imagens %}
                     <tr>
-                        <td><img src="{{ url_for('buraco_urgente', filename=img.arquivo) }}" alt="Ocorrência"></td>
+                        <td><img src="{{ url_for('Pasta_final', filename=img.arquivo) }}" alt="Ocorrência"></td>
                         <td>{{ img.localizacao }}</td>
                         <td>{{ img.id }}</td>
                         <td>{{ img.categoria }}</td>
@@ -337,6 +337,17 @@
         })
         .catch(error => console.error("Erro ao salvar OS:", error));
     }
+
+    function atualizarPagina() {
+            setTimeout(function() {
+                location.reload();
+            }, 5000); // Atualiza a cada 5000 milissegundos (5 segundos)
+        }
+        window.onload = atualizarPagina;
+
     </script>
+
+<button id="atualizar-btn">🔄 Atualizar Ocorrências</button>
+
 </body>
 </html>

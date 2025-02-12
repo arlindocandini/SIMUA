@@ -1,11 +1,16 @@
 from flask import Flask, render_template, send_from_directory, redirect, url_for, request, jsonify
 import os
 from datetime import datetime
+import threading
+import time
+import subprocess
+from classificacao import processar_imagens  # Importa a função de classificação de imagens
+
 
 app = Flask(__name__)
 
 # Caminho para a pasta com as imagens
-IMAGE_FOLDER = os.path.join('static', 'buraco_urgente')
+IMAGE_FOLDER = os.path.join('static', 'Pasta_final')
 
 # Lista para armazenar as ordens de serviço
 ordens_servico = []
@@ -25,7 +30,7 @@ def processar_nome_arquivo(nome_arquivo):
         categorias_map = {
             "bueiro": "BUEIRO",
             "fiosolto": "FIO SOLTO",
-            "buraconapista": "BURACO NA PISTA",
+            "buraco": "BURACO NA PISTA",
             "pistaobstruida": "PISTA OBSTRUÍDA",
             "matoalto": "MATO ALTO"
         }
@@ -68,8 +73,8 @@ def index():
 def dashboard():
     return render_template('dashboard.html')
 
-@app.route('/buraco_urgente/<filename>')
-def buraco_urgente(filename):
+@app.route('/Pasta_final/<filename>')
+def Pasta_final(filename):
     return send_from_directory(IMAGE_FOLDER, filename)
 
 
@@ -167,30 +172,58 @@ def api_dashboard():
 
 @app.route('/api/os_dashboard')
 def api_os_dashboard():
-    data_inicio = request.args.get('data_inicio')
-    data_fim = request.args.get('data_fim')
-    os_detalhes = [processar_nome_arquivo(os) for os in ordens_servico if processar_nome_arquivo(os)]
+    # Criando estrutura para armazenar contagens por data
+    os_por_data = {}
 
-    if data_inicio and data_fim:
-        os_detalhes = [os for os in os_detalhes if data_inicio <= os['data'] <= data_fim]
+    for os in ordens_servico:
+        data = os['data_os']
+        prioridade = os['prioridade']
 
-    stats = {
-        'Emergência': sum(1 for os in os_detalhes if os and os['status'] == 'Emergência'),
-        'Urgente': sum(1 for os in os_detalhes if os and os['status'] == 'Urgente'),
-        'Pouco Urgente': sum(1 for os in os_detalhes if os and os['status'] == 'Pouco Urgente'),
-        'Não Urgente': sum(1 for os in os_detalhes if os and os['status'] == 'Não Urgente'),
-        'Total OS': len(os_detalhes),
-        'OS Em Andamento': len(os_detalhes),  # Ajuste conforme a lógica de status de andamento
-        'OS Finalizadas': 0,  # Atualize conforme a lógica de finalização
-        'os_detalhes': os_detalhes  # Detalhes para o gráfico de linha
-    }
-    return jsonify(stats)
+        if data not in os_por_data:
+            os_por_data[data] = {
+                'data': data,  # Incluímos a data para referência
+                'Alta': 0, 'Média': 0, 'Baixa': 0,
+                'Total OS': 0, 'OS Em Andamento': 0, 'OS Finalizadas': 0
+            }
+
+        os_por_data[data][prioridade] += 1
+        os_por_data[data]['Total OS'] += 1
+        if os['status'] == 'Em andamento':
+            os_por_data[data]['OS Em Andamento'] += 1
+        elif os['status'] == 'Finalizada':
+            os_por_data[data]['OS Finalizadas'] += 1
+
+    # Convertendo dicionário em uma lista
+    os_detalhes_lista = list(os_por_data.values())
+
+    return jsonify({'os_detalhes': os_detalhes_lista})
+
+
+
+
 
 @app.route('/api/ocorrencias')
 def api_ocorrencias():
     imagens = os.listdir(IMAGE_FOLDER)
     dados_imagens = [processar_nome_arquivo(img) for img in imagens if processar_nome_arquivo(img)]
+    
+    print("📡 Enviando os seguintes dados de ocorrências:", dados_imagens)  # Log no terminal
+
     return jsonify([img for img in dados_imagens if img])
+
+
+
+
+# Iniciar classificação de imagens automaticamente
+def iniciar_classificacao():
+    print("📸 Iniciando classificação automática de imagens...")
+    subprocess.Popen(["python", "classificacao.py"])
+
+# Rodar a classificação em uma thread separada
+classificacao_thread = threading.Thread(target=iniciar_classificacao, daemon=True)
+classificacao_thread.start()
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
