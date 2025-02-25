@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordens de Serviço</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            background-color: #f5f5f5;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #0a2a18;
+            color: white;
+            padding: 20px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #1b4428;
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #d9e8d4;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            color: #0a2a18;
+        }
+
+        .filters {
+            display: flex;
+            gap: 10px;
+        }
+
+        .filters button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-active {
+            background-color: #ff4c4c;
+            color: white;
+        }
+
+        .btn-inactive {
+            background-color: #ccc;
+            color: black;
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #0a2a18;
+            color: white;
+        }
+
+        .status {
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .os-card p {
+        margin-bottom: 10px;  /* Adiciona espaçamento entre as linhas */
+        line-height: 1.2;  /* Ajusta a altura da linha para melhor legibilidade */
+        }
+
+
+        .status-andamento { background-color: #ffa500; color: white; }
+        .status-finalizado { background-color: #008000; color: white; }
+
+        .btn-finalizar {
+            background-color: green;
+            color: white;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-finalizar:hover {
+            opacity: 0.8;
+        }
+
+        .container {
+        padding: 20px;
+        background: #f5f5f5;
+        border-radius: 10px;
+    }
+    .tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+    .tab-btn {
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+        background: #ddd;
+        font-weight: bold;
+    }
+    .tab-btn.active {
+        background: #0a2a18;
+        color: white;
+    }
+    .tab-content {
+        display: none;
+    }
+    .tab-content.active {
+        display: block;
+    }
+    .os-card {
+        background: white;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+    }
+    .status {
+        padding: 5px;
+        font-weight: bold;
+    }
+    .status.em-andamento {
+        background: orange;
+        color: white;
+    }
+    .status.finalizada {
+        background: green;
+        color: white;
+    }
+    .btn-finalizar {
+        padding: 8px;
+        border: none;
+        cursor: pointer;
+        background: green;
+        color: white;
+        font-weight: bold;
+        border-radius: 5px;
+    }
+
+
+    .prioridade-alta {
+    background-color: red;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.prioridade-media {
+    background-color: orange;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.prioridade-baixa {
+    background-color: yellow;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+    </style>
+</head>
+<body>
+    <!-- Barra lateral -->
+    <div class="sidebar">
+        <h2>Prefeitura</h2>
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('index') }}">Ocorrências</a>
+        <a href="{{ url_for('ordens') }}">Ordens de Serviços (OS)</a>
+    </div>
+
+    <!-- Conteúdo principal -->
+    <div class="content">
+
+
+        <div class="container">
+            <h2>📋 Ordens de Serviço</h2>
+        
+            <div class="tabs">
+                <button class="tab-btn active" onclick="mostrarTab('existentes')">OS Existentes</button>
+                <button class="tab-btn" onclick="mostrarTab('finalizadas')">OS Finalizadas</button>
+            </div>
+        
+            <div id="existentes" class="tab-content active">
+                {% for os in ordens if os.status == 'Em andamento' %}
+                <div class="os-card">
+                    <strong>OS #{{ os.id }} - {{ os.categoria }}</strong>
+                    <p><b>Responsável:</b> {{ os.responsavel }}</p>
+                    <p><b>Equipe:</b> {{ os.equipe }}</p>
+                    <span class="{% if os.prioridade == 'Alta' %}prioridade-alta
+                    {% elif os.prioridade == 'Média' %}prioridade-media
+                   {% elif os.prioridade == 'Baixa' %}prioridade-baixa{% endif %}">
+                   <b>Prioridade:</b>{{ os.prioridade }}
+                   </span>
+                    <p><b>Observação:</b> {{ os.observacoes }}</p> <!-- AQUI ADICIONAMOS A OBSERVAÇÃO -->
+                    <p><b>Status:</b> <span class="status em-andamento">🟠 Em andamento</span></p>
+                    <p><b>Registro:</b> {{ os.data_criacao }}</p>
+                    <p><b>OS Gerada:</b> {{ os.data_os }}</p>
+                    <p><b>Resolver até:</b> {{ os.data_prazo }}</p>
+                    <button class="btn-finalizar" onclick="finalizarOS({{ os.id }})">✅ Finalizar OS</button>
+                </div>
+                {% endfor %}
+            </div>
+        
+            <div id="finalizadas" class="tab-content">
+                {% for os in ordens if os.status == 'Finalizada' %}
+                <div class="os-card finalizada">
+                    <strong>OS #{{ os.id }} - {{ os.categoria }}</strong>
+                    <p><b>Responsável:</b> {{ os.responsavel }}</p>
+                    <p><b>Equipe:</b> {{ os.equipe }}</p>
+                    <span class="{% if os.prioridade == 'Alta' %}prioridade-alta
+                    {% elif os.prioridade == 'Média' %}prioridade-media
+                    {% elif os.prioridade == 'Baixa' %}prioridade-baixa{% endif %}">
+                    <b>Prioridade:</b>{{ os.prioridade }}
+                    </span>
+                    <p><b>Observação:</b> {{ os.observacoes }}</p> <!-- AQUI ADICIONAMOS A OBSERVAÇÃO -->
+                    <p><b>Status:</b> <span class="status finalizada">🟢 Finalizada</span></p>
+                    <p><b>Registro:</b> {{ os.data_criacao }}</p>
+                    <p><b>OS Gerada:</b> {{ os.data_os }}</p>
+                    <p><b>Finalizada em:</b> {{ os.data_finalizacao }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function filtrarOS(status) {
+            const rows = document.querySelectorAll("#tabela-os tr");
+            rows.forEach(row => {
+                if (status === "Todos" || row.getAttribute("data-status") === status) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+
+            // Atualizar botões de filtro
+            document.querySelectorAll(".filters button").forEach(btn => {
+                btn.classList.remove("btn-active");
+                btn.classList.add("btn-inactive");
+            });
+
+            document.querySelector(`.filters button[onclick="filtrarOS('${status}')"]`).classList.add("btn-active");
+        }
+
+        function finalizarOS(id) {
+            fetch(`/finalizar_os/${id}`, {
+                method: "POST"
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert("Ordem de Serviço finalizada com sucesso!");
+                window.location.reload();
+            })
+            .catch(error => console.error("Erro ao finalizar OS:", error));
+        }
+
+
+        function mostrarTab(tab) {
+        document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
+        document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+        document.getElementById(tab).classList.add("active");
+        document.querySelector(`[onclick="mostrarTab('${tab}')"]`).classList.add("active");
+    }
+
+    function finalizarOS(id) {
+        fetch(`/finalizar_os/${id}`, { method: "POST" })
+        .then(response => response.json())
+        .then(() => {
+            alert("OS Finalizada!");
+            window.location.reload();
+        })
+        .catch(error => console.error("Erro ao finalizar OS:", error));
+    }
+    </script>
+
+    
+</body>
+</html>

@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_4c8756ead0cf8e7196d722fdc996c94e {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_4c8756ead0cf8e7196d722fdc996c94e" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_4c8756ead0cf8e7196d722fdc996c94e = L.map(
+                "map_4c8756ead0cf8e7196d722fdc996c94e",
+                {
+                    center: [-16.6803, -49.2567],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_7113e277b5274a540236b16e169e4f40 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_7113e277b5274a540236b16e169e4f40.addTo(map_4c8756ead0cf8e7196d722fdc996c94e);
+        
+    
+            var marker_bf47769a6ac63b566fb9c97fbb8fa3af = L.marker(
+                [-16.695, -49.25],
+                {
+}
+            ).addTo(map_4c8756ead0cf8e7196d722fdc996c94e);
+        
+    
+            var icon_0bcb4b8edc13bba1e0857005169af0a6 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_bf47769a6ac63b566fb9c97fbb8fa3af.setIcon(icon_0bcb4b8edc13bba1e0857005169af0a6);
+        
+    
+        var popup_d78c9707a50ff1db99240cd4d3b3eef8 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_424add4fdbda7db4aafbd48f2dbb04fe = $(`<div id="html_424add4fdbda7db4aafbd48f2dbb04fe" style="width: 100.0%; height: 100.0%;">         <b>Endereço:</b> -16.695, -49.25<br>         <b>Status:</b> buraconaourgente<br>         <img src='/static/Pasta_final/-16.6950_-49.2500__id67583__buraconaourgente__13022025.jpg' width='200px'>         </div>`)[0];
+                popup_d78c9707a50ff1db99240cd4d3b3eef8.setContent(html_424add4fdbda7db4aafbd48f2dbb04fe);
+            
+        
+
+        marker_bf47769a6ac63b566fb9c97fbb8fa3af.bindPopup(popup_d78c9707a50ff1db99240cd4d3b3eef8)
+        ;
+
+        
+    
+    
+            var marker_dd5e41cd307c20c87b979a0553ea5eaf = L.marker(
+                [-16.705, -49.26],
+                {
+}
+            ).addTo(map_4c8756ead0cf8e7196d722fdc996c94e);
+        
+    
+            var icon_a6b034c37fd05b04e6b927725776c8cd = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_dd5e41cd307c20c87b979a0553ea5eaf.setIcon(icon_a6b034c37fd05b04e6b927725776c8cd);
+        
+    
+        var popup_b92ef168e1d549b70249bc3216a83d9d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_49ef6b034e27a108f2c49742f84a3d93 = $(`<div id="html_49ef6b034e27a108f2c49742f84a3d93" style="width: 100.0%; height: 100.0%;">         <b>Endereço:</b> -16.705, -49.26<br>         <b>Status:</b> buracourgente<br>         <img src='/static/Pasta_final/-16.7050_-49.2600__id29854__buracourgente__13022025.jpg' width='200px'>         </div>`)[0];
+                popup_b92ef168e1d549b70249bc3216a83d9d.setContent(html_49ef6b034e27a108f2c49742f84a3d93);
+            
+        
+
+        marker_dd5e41cd307c20c87b979a0553ea5eaf.bindPopup(popup_b92ef168e1d549b70249bc3216a83d9d)
+        ;
+
+        
+    
+    
+            var marker_e0403ecb2b752133a22aeb3e4f6ae52b = L.marker(
+                [-16.71, -49.23],
+                {
+}
+            ).addTo(map_4c8756ead0cf8e7196d722fdc996c94e);
+        
+    
+            var icon_59b113249c462b5bb27f108e5d0c355e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_e0403ecb2b752133a22aeb3e4f6ae52b.setIcon(icon_59b113249c462b5bb27f108e5d0c355e);
+        
+    
+        var popup_cea7d52f01f1c5273bf0088528cc78bf = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ea538133735c9202ffb5fcb70c01527f = $(`<div id="html_ea538133735c9202ffb5fcb70c01527f" style="width: 100.0%; height: 100.0%;">         <b>Endereço:</b> -16.71, -49.23<br>         <b>Status:</b> bueiroemergencia<br>         <img src='/static/Pasta_final/-16.7100_-49.2300__id51237__bueiroemergencia__13022025.jpg' width='200px'>         </div>`)[0];
+                popup_cea7d52f01f1c5273bf0088528cc78bf.setContent(html_ea538133735c9202ffb5fcb70c01527f);
+            
+        
+
+        marker_e0403ecb2b752133a22aeb3e4f6ae52b.bindPopup(popup_cea7d52f01f1c5273bf0088528cc78bf)
+        ;
+
+        
+    
+    
+            var marker_c07f32bd08914e4aa260fd86afaf49f5 = L.marker(
+                [-16.72, -49.24],
+                {
+}
+            ).addTo(map_4c8756ead0cf8e7196d722fdc996c94e);
+        
+    
+            var icon_7a87a40e5eec8cb3002c375edd823d67 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_c07f32bd08914e4aa260fd86afaf49f5.setIcon(icon_7a87a40e5eec8cb3002c375edd823d67);
+        
+    
+        var popup_7d073ba6bad14ecc2675a95e0afc5acf = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_be2caf52d8f43a611f9e33964b1018cb = $(`<div id="html_be2caf52d8f43a611f9e33964b1018cb" style="width: 100.0%; height: 100.0%;">         <b>Endereço:</b> -16.72, -49.24<br>         <b>Status:</b> buracourgente<br>         <img src='/static/Pasta_final/-16.7200_-49.2400__id45972__buracourgente__13022025.jpg' width='200px'>         </div>`)[0];
+                popup_7d073ba6bad14ecc2675a95e0afc5acf.setContent(html_be2caf52d8f43a611f9e33964b1018cb);
+            
+        
+
+        marker_c07f32bd08914e4aa260fd86afaf49f5.bindPopup(popup_7d073ba6bad14ecc2675a95e0afc5acf)
+        ;
+
+        
+    
+    
+            var marker_78ddb34cb1f19b01c3abe04802170ccf = L.marker(
+                [-16.72, -49.24],
+                {
+}
+            ).addTo(map_4c8756ead0cf8e7196d722fdc996c94e);
+        
+    
+            var icon_55febdf32d7eefb14fbcd851e49f3198 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_78ddb34cb1f19b01c3abe04802170ccf.setIcon(icon_55febdf32d7eefb14fbcd851e49f3198);
+        
+    
+        var popup_cddddd99c84b8ea340e6c162f6e07f97 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_5bf359cff4bafb1172c7aa2bee0dda3d = $(`<div id="html_5bf359cff4bafb1172c7aa2bee0dda3d" style="width: 100.0%; height: 100.0%;">         <b>Endereço:</b> -16.72, -49.24<br>         <b>Status:</b> matoaltonaourgente<br>         <img src='/static/Pasta_final/-16.7200_-49.2400__id48251__matoaltonaourgente__13022025.jpg' width='200px'>         </div>`)[0];
+                popup_cddddd99c84b8ea340e6c162f6e07f97.setContent(html_5bf359cff4bafb1172c7aa2bee0dda3d);
+            
+        
+
+        marker_78ddb34cb1f19b01c3abe04802170ccf.bindPopup(popup_cddddd99c84b8ea340e6c162f6e07f97)
+        ;
+
+        
+    
+    
+            var marker_b7c0e6688c59ee44ea4e60cd64a73580 = L.marker(
+                [-16.725, -49.255],
+                {
+}
+            ).addTo(map_4c8756ead0cf8e7196d722fdc996c94e);
+        
+    
+            var icon_efd18e9e4e08eabcc2f04d4356488555 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_b7c0e6688c59ee44ea4e60cd64a73580.setIcon(icon_efd18e9e4e08eabcc2f04d4356488555);
+        
+    
+        var popup_ce3f1cc9240810d1edb06ea2acb944d0 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1e8b4c039c2d523ebf71e8a4b65675ed = $(`<div id="html_1e8b4c039c2d523ebf71e8a4b65675ed" style="width: 100.0%; height: 100.0%;">         <b>Endereço:</b> -16.725, -49.255<br>         <b>Status:</b> matoaltourgente<br>         <img src='/static/Pasta_final/-16.7250_-49.2550__id48213__matoaltourgente__13022025.jpg' width='200px'>         </div>`)[0];
+                popup_ce3f1cc9240810d1edb06ea2acb944d0.setContent(html_1e8b4c039c2d523ebf71e8a4b65675ed);
+            
+        
+
+        marker_b7c0e6688c59ee44ea4e60cd64a73580.bindPopup(popup_ce3f1cc9240810d1edb06ea2acb944d0)
+        ;
+
+        
+    
+    
+            var marker_2341d022e194b5675b9d708a7f7be030 = L.marker(
+                [-16.73, -49.245],
+                {
+}
+            ).addTo(map_4c8756ead0cf8e7196d722fdc996c94e);
+        
+    
+            var icon_9bf56ab41db63dac4ea34dc2b965b6f1 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_2341d022e194b5675b9d708a7f7be030.setIcon(icon_9bf56ab41db63dac4ea34dc2b965b6f1);
+        
+    
+        var popup_e24a96356685bfeaae09398d336cd4c4 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_51e9335d6af96c177569a1250cc3ec95 = $(`<div id="html_51e9335d6af96c177569a1250cc3ec95" style="width: 100.0%; height: 100.0%;">         <b>Endereço:</b> -16.73, -49.245<br>         <b>Status:</b> fiosoltoemergencia<br>         <img src='/static/Pasta_final/-16.7300_-49.2450__id71245__fiosoltoemergencia__13022025.jpg' width='200px'>         </div>`)[0];
+                popup_e24a96356685bfeaae09398d336cd4c4.setContent(html_51e9335d6af96c177569a1250cc3ec95);
+            
+        
+
+        marker_2341d022e194b5675b9d708a7f7be030.bindPopup(popup_e24a96356685bfeaae09398d336cd4c4)
+        ;
+
+        
+    
+    
+            var marker_e5923632ae6b5eb9a7ba7646bb632257 = L.marker(
+                [-16.75, -49.275],
+                {
+}
+            ).addTo(map_4c8756ead0cf8e7196d722fdc996c94e);
+        
+    
+            var icon_577e45134499b12146c5ff330ad9d6d4 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_e5923632ae6b5eb9a7ba7646bb632257.setIcon(icon_577e45134499b12146c5ff330ad9d6d4);
+        
+    
+        var popup_72f92661fab092083202e9a17d448429 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1586736d4902f5c25e60510e68104c6c = $(`<div id="html_1586736d4902f5c25e60510e68104c6c" style="width: 100.0%; height: 100.0%;">         <b>Endereço:</b> -16.75, -49.275<br>         <b>Status:</b> buracourgente<br>         <img src='/static/Pasta_final/-16.7500_-49.2750__id59347__buracourgente__13022025.jpg' width='200px'>         </div>`)[0];
+                popup_72f92661fab092083202e9a17d448429.setContent(html_1586736d4902f5c25e60510e68104c6c);
+            
+        
+
+        marker_e5923632ae6b5eb9a7ba7646bb632257.bindPopup(popup_72f92661fab092083202e9a17d448429)
+        ;
+
+        
+    
+    
+            var marker_119096145ef8354f6009ce3a91f5cfa2 = L.marker(
+                [-16.84, -49.365],
+                {
+}
+            ).addTo(map_4c8756ead0cf8e7196d722fdc996c94e);
+        
+    
+            var icon_56d9c47c0f6e2870ebb050c586940f44 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_119096145ef8354f6009ce3a91f5cfa2.setIcon(icon_56d9c47c0f6e2870ebb050c586940f44);
+        
+    
+        var popup_4e258cba9cc28fe013c7086a2536cb96 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_34b39189cd05feb6bfcd835a34130677 = $(`<div id="html_34b39189cd05feb6bfcd835a34130677" style="width: 100.0%; height: 100.0%;">         <b>Endereço:</b> -16.84, -49.365<br>         <b>Status:</b> buraconaourgente<br>         <img src='/static/Pasta_final/-16.8400_-49.3650__id59482__buraconaourgente__13022025.jpg' width='200px'>         </div>`)[0];
+                popup_4e258cba9cc28fe013c7086a2536cb96.setContent(html_34b39189cd05feb6bfcd835a34130677);
+            
+        
+
+        marker_119096145ef8354f6009ce3a91f5cfa2.bindPopup(popup_4e258cba9cc28fe013c7086a2536cb96)
+        ;
+
+        
+    
+    
+            var marker_8685aead5e9275e7905a1a73375197a4 = L.marker(
+                [-28.602761, -49.81427],
+                {
+}
+            ).addTo(map_4c8756ead0cf8e7196d722fdc996c94e);
+        
+    
+            var icon_9a0e62b22b8a6f3d0536e65e384b0f58 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_8685aead5e9275e7905a1a73375197a4.setIcon(icon_9a0e62b22b8a6f3d0536e65e384b0f58);
+        
+    
+        var popup_80ffcc3a8a97cb2d5dfb23805a31b250 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_010b9b3f2457bc0cd3ab7731398509fd = $(`<div id="html_010b9b3f2457bc0cd3ab7731398509fd" style="width: 100.0%; height: 100.0%;">         <b>Endereço:</b> -28.602761, -49.81427<br>         <b>Status:</b> buracourgente<br>         <img src='/static/Pasta_final/-28.602761_-49.81427__id1739285367733__buracourgente__11022025.jpg' width='200px'>         </div>`)[0];
+                popup_80ffcc3a8a97cb2d5dfb23805a31b250.setContent(html_010b9b3f2457bc0cd3ab7731398509fd);
+            
+        
+
+        marker_8685aead5e9275e7905a1a73375197a4.bindPopup(popup_80ffcc3a8a97cb2d5dfb23805a31b250)
+        ;
+
+        
+    
+    
+            var marker_ed55a2fff8806fa7dacad78d392e14a9 = L.marker(
+                [-29.791942, -56.654639],
+                {
+}
+            ).addTo(map_4c8756ead0cf8e7196d722fdc996c94e);
+        
+    
+            var icon_0a8501d05fcf2858be6fa0214260ce34 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_ed55a2fff8806fa7dacad78d392e14a9.setIcon(icon_0a8501d05fcf2858be6fa0214260ce34);
+        
+    
+        var popup_a189175311a4f8ad7a1891030b96e8db = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_790eedd4f58ba20f7e028040dcbc321f = $(`<div id="html_790eedd4f58ba20f7e028040dcbc321f" style="width: 100.0%; height: 100.0%;">         <b>Endereço:</b> -29.791942, -56.654639<br>         <b>Status:</b> buracourgente<br>         <img src='/static/Pasta_final/-29.791942_-56.654639__id1739285283982__buracourgente__11022025.jpg' width='200px'>         </div>`)[0];
+                popup_a189175311a4f8ad7a1891030b96e8db.setContent(html_790eedd4f58ba20f7e028040dcbc321f);
+            
+        
+
+        marker_ed55a2fff8806fa7dacad78d392e14a9.bindPopup(popup_a189175311a4f8ad7a1891030b96e8db)
+        ;
+
+        
+    
+</script>
+</html>

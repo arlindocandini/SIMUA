@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_1af0b0cca78589c540a259f9693d6670 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_1af0b0cca78589c540a259f9693d6670" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_1af0b0cca78589c540a259f9693d6670 = L.map(
+                "map_1af0b0cca78589c540a259f9693d6670",
+                {
+                    center: [-16.6803, -49.2567],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_ceb6a9785c676e29f4031f5c1ffe0a0c = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_ceb6a9785c676e29f4031f5c1ffe0a0c.addTo(map_1af0b0cca78589c540a259f9693d6670);
+        
+    
+            var marker_5924a9da7f192a9774081333e73b48df = L.marker(
+                [-16.695, -49.25],
+                {
+}
+            ).addTo(map_1af0b0cca78589c540a259f9693d6670);
+        
+    
+            var icon_827314226d4588dac83c820b1a578a8c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_5924a9da7f192a9774081333e73b48df.setIcon(icon_827314226d4588dac83c820b1a578a8c);
+        
+    
+        var popup_6174633f245154f9a74bb9063e8749bf = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_22172cc59921c1da335c1c807ca317de = $(`<div id="html_22172cc59921c1da335c1c807ca317de" style="width: 100.0%; height: 100.0%;">         <b>Endereço:</b> Jd Bela Vista<br>         <b>Status:</b> Ocorrencia<br>         <img src='/static/ocorrencia/-16.6950_-49.2500__id67583__buraconaourgente__13022025.jpg' width='200px'>         </div>`)[0];
+                popup_6174633f245154f9a74bb9063e8749bf.setContent(html_22172cc59921c1da335c1c807ca317de);
+            
+        
+
+        marker_5924a9da7f192a9774081333e73b48df.bindPopup(popup_6174633f245154f9a74bb9063e8749bf)
+        ;
+
+        
+    
+    
+            var marker_15eea9d6d200cfa621389719207cc3a6 = L.marker(
+                [-16.705, -49.26],
+                {
+}
+            ).addTo(map_1af0b0cca78589c540a259f9693d6670);
+        
+    
+            var icon_9bbedaf481607519fba720f53bfe124a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_15eea9d6d200cfa621389719207cc3a6.setIcon(icon_9bbedaf481607519fba720f53bfe124a);
+        
+    
+        var popup_065d95ee859722f230a517cfb12dc05e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9f4ef91294bb4da277c148c507d630c8 = $(`<div id="html_9f4ef91294bb4da277c148c507d630c8" style="width: 100.0%; height: 100.0%;">         <b>Endereço:</b> Jd Bela Vista<br>         <b>Status:</b> Ocorrencia<br>         <img src='/static/ocorrencia/-16.7050_-49.2600__id29854__buracourgente__13022025.jpg' width='200px'>         </div>`)[0];
+                popup_065d95ee859722f230a517cfb12dc05e.setContent(html_9f4ef91294bb4da277c148c507d630c8);
+            
+        
+
+        marker_15eea9d6d200cfa621389719207cc3a6.bindPopup(popup_065d95ee859722f230a517cfb12dc05e)
+        ;
+
+        
+    
+    
+            var marker_b6fb644e5ecd04f1a7a85027db27ece6 = L.marker(
+                [-16.71, -49.23],
+                {
+}
+            ).addTo(map_1af0b0cca78589c540a259f9693d6670);
+        
+    
+            var icon_67bea1a63d6c4dfb5b28f74374b9f8e6 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_b6fb644e5ecd04f1a7a85027db27ece6.setIcon(icon_67bea1a63d6c4dfb5b28f74374b9f8e6);
+        
+    
+        var popup_70c4b0f8eb55033c4bb413a3a10774c9 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_f753f3ff57bc39bf88acfdb76680dd00 = $(`<div id="html_f753f3ff57bc39bf88acfdb76680dd00" style="width: 100.0%; height: 100.0%;">         <b>Endereço:</b> Desconhecido<br>         <b>Status:</b> Ocorrencia<br>         <img src='/static/ocorrencia/-16.7100_-49.2300__id51237__bueiroemergencia__13022025.jpg' width='200px'>         </div>`)[0];
+                popup_70c4b0f8eb55033c4bb413a3a10774c9.setContent(html_f753f3ff57bc39bf88acfdb76680dd00);
+            
+        
+
+        marker_b6fb644e5ecd04f1a7a85027db27ece6.bindPopup(popup_70c4b0f8eb55033c4bb413a3a10774c9)
+        ;
+
+        
+    
+    
+            var marker_f2b81593f0efc683fe03b2ed71719aa6 = L.marker(
+                [-16.72, -49.24],
+                {
+}
+            ).addTo(map_1af0b0cca78589c540a259f9693d6670);
+        
+    
+            var icon_3b2d6147342ef19bc76edb34a5f53f95 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_f2b81593f0efc683fe03b2ed71719aa6.setIcon(icon_3b2d6147342ef19bc76edb34a5f53f95);
+        
+    
+        var popup_93c4a78e50bb68e9bcb46453f1506058 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_c357c57cabcf3b5db5a2b8f40ebe53c7 = $(`<div id="html_c357c57cabcf3b5db5a2b8f40ebe53c7" style="width: 100.0%; height: 100.0%;">         <b>Endereço:</b> Desconhecido<br>         <b>Status:</b> Ocorrencia<br>         <img src='/static/ocorrencia/-16.7200_-49.2400__id45972__buracourgente__13022025.jpg' width='200px'>         </div>`)[0];
+                popup_93c4a78e50bb68e9bcb46453f1506058.setContent(html_c357c57cabcf3b5db5a2b8f40ebe53c7);
+            
+        
+
+        marker_f2b81593f0efc683fe03b2ed71719aa6.bindPopup(popup_93c4a78e50bb68e9bcb46453f1506058)
+        ;
+
+        
+    
+    
+            var marker_f48b7ee82ee6464dee4791a83a3e35e8 = L.marker(
+                [-16.72, -49.24],
+                {
+}
+            ).addTo(map_1af0b0cca78589c540a259f9693d6670);
+        
+    
+            var icon_ad6b620abfd25531034761cf2baee3d1 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_f48b7ee82ee6464dee4791a83a3e35e8.setIcon(icon_ad6b620abfd25531034761cf2baee3d1);
+        
+    
+        var popup_0936d9efb8f0d608606147602d380c7b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_731439e5b61129ee201e7faeb68f5c21 = $(`<div id="html_731439e5b61129ee201e7faeb68f5c21" style="width: 100.0%; height: 100.0%;">         <b>Endereço:</b> Desconhecido<br>         <b>Status:</b> Ocorrencia<br>         <img src='/static/ocorrencia/-16.7200_-49.2400__id48251__matoaltonaourgente__13022025.jpg' width='200px'>         </div>`)[0];
+                popup_0936d9efb8f0d608606147602d380c7b.setContent(html_731439e5b61129ee201e7faeb68f5c21);
+            
+        
+
+        marker_f48b7ee82ee6464dee4791a83a3e35e8.bindPopup(popup_0936d9efb8f0d608606147602d380c7b)
+        ;
+
+        
+    
+    
+            var marker_06d68dc88a17399e8b22a723c6c1c648 = L.marker(
+                [-16.725, -49.255],
+                {
+}
+            ).addTo(map_1af0b0cca78589c540a259f9693d6670);
+        
+    
+            var icon_332a8bb51992804f799400c523aab0f2 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_06d68dc88a17399e8b22a723c6c1c648.setIcon(icon_332a8bb51992804f799400c523aab0f2);
+        
+    
+        var popup_e3ea6f08aaa46289f156ded979727d63 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_c6eff19dfd8cf34d16adcca22c783402 = $(`<div id="html_c6eff19dfd8cf34d16adcca22c783402" style="width: 100.0%; height: 100.0%;">         <b>Endereço:</b> Setor Bueno<br>         <b>Status:</b> Ocorrencia<br>         <img src='/static/ocorrencia/-16.7250_-49.2550__id48213__matoaltourgente__13022025.jpg' width='200px'>         </div>`)[0];
+                popup_e3ea6f08aaa46289f156ded979727d63.setContent(html_c6eff19dfd8cf34d16adcca22c783402);
+            
+        
+
+        marker_06d68dc88a17399e8b22a723c6c1c648.bindPopup(popup_e3ea6f08aaa46289f156ded979727d63)
+        ;
+
+        
+    
+    
+            var marker_a4d279bf3cfc6fcedd3c7a6c684f2152 = L.marker(
+                [-16.73, -49.245],
+                {
+}
+            ).addTo(map_1af0b0cca78589c540a259f9693d6670);
+        
+    
+            var icon_e26d7228d99ca968f12129a3d005cc00 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_a4d279bf3cfc6fcedd3c7a6c684f2152.setIcon(icon_e26d7228d99ca968f12129a3d005cc00);
+        
+    
+        var popup_cf32ea83623d3f9a0109b887bb7a768a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2b18455135716506689b727ee3c41f00 = $(`<div id="html_2b18455135716506689b727ee3c41f00" style="width: 100.0%; height: 100.0%;">         <b>Endereço:</b> Desconhecido<br>         <b>Status:</b> Ocorrencia<br>         <img src='/static/ocorrencia/-16.7300_-49.2450__id71245__fiosoltoemergencia__13022025.jpg' width='200px'>         </div>`)[0];
+                popup_cf32ea83623d3f9a0109b887bb7a768a.setContent(html_2b18455135716506689b727ee3c41f00);
+            
+        
+
+        marker_a4d279bf3cfc6fcedd3c7a6c684f2152.bindPopup(popup_cf32ea83623d3f9a0109b887bb7a768a)
+        ;
+
+        
+    
+    
+            var marker_4086421f06147851729b8412a1adc5a6 = L.marker(
+                [-16.75, -49.275],
+                {
+}
+            ).addTo(map_1af0b0cca78589c540a259f9693d6670);
+        
+    
+            var icon_a38f4bcd6cfcd9c985335c37025796de = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_4086421f06147851729b8412a1adc5a6.setIcon(icon_a38f4bcd6cfcd9c985335c37025796de);
+        
+    
+        var popup_33e78b0a857857ac3655641d8a7c9c40 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_f619f3bd5084003a219459fb604af6f4 = $(`<div id="html_f619f3bd5084003a219459fb604af6f4" style="width: 100.0%; height: 100.0%;">         <b>Endereço:</b> Jd Caravelas<br>         <b>Status:</b> Ocorrencia<br>         <img src='/static/ocorrencia/-16.7500_-49.2750__id59347__buracourgente__13022025.jpg' width='200px'>         </div>`)[0];
+                popup_33e78b0a857857ac3655641d8a7c9c40.setContent(html_f619f3bd5084003a219459fb604af6f4);
+            
+        
+
+        marker_4086421f06147851729b8412a1adc5a6.bindPopup(popup_33e78b0a857857ac3655641d8a7c9c40)
+        ;
+
+        
+    
+    
+            var marker_cfa182f3d2e9457e8591939152abfc05 = L.marker(
+                [-16.84, -49.365],
+                {
+}
+            ).addTo(map_1af0b0cca78589c540a259f9693d6670);
+        
+    
+            var icon_d17dea977e35e9f0815117c01001a8d1 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_cfa182f3d2e9457e8591939152abfc05.setIcon(icon_d17dea977e35e9f0815117c01001a8d1);
+        
+    
+        var popup_c2ef5c5281e19abd251bf638ce0894b3 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_19a39772a65e204b9d9f54ba020d58fc = $(`<div id="html_19a39772a65e204b9d9f54ba020d58fc" style="width: 100.0%; height: 100.0%;">         <b>Endereço:</b> Desconhecido<br>         <b>Status:</b> Ocorrencia<br>         <img src='/static/ocorrencia/-16.8400_-49.3650__id59482__buraconaourgente__13022025.jpg' width='200px'>         </div>`)[0];
+                popup_c2ef5c5281e19abd251bf638ce0894b3.setContent(html_19a39772a65e204b9d9f54ba020d58fc);
+            
+        
+
+        marker_cfa182f3d2e9457e8591939152abfc05.bindPopup(popup_c2ef5c5281e19abd251bf638ce0894b3)
+        ;
+
+        
+    
+    
+            var marker_b77519d4b8aa2f4da5a97c11ccd5498b = L.marker(
+                [-28.602761, -49.81427],
+                {
+}
+            ).addTo(map_1af0b0cca78589c540a259f9693d6670);
+        
+    
+            var icon_b3bd2dba3adbb86ea2a29ad0fc7d89da = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_b77519d4b8aa2f4da5a97c11ccd5498b.setIcon(icon_b3bd2dba3adbb86ea2a29ad0fc7d89da);
+        
+    
+        var popup_ae068f5157a7a399236c378f38158d82 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_7a0bf04cab3dda5f66ac29049a475fce = $(`<div id="html_7a0bf04cab3dda5f66ac29049a475fce" style="width: 100.0%; height: 100.0%;">         <b>Endereço:</b> Desconhecido<br>         <b>Status:</b> Ocorrencia<br>         <img src='/static/ocorrencia/-28.602761_-49.81427__id1739285367733__buracourgente__11022025.jpg' width='200px'>         </div>`)[0];
+                popup_ae068f5157a7a399236c378f38158d82.setContent(html_7a0bf04cab3dda5f66ac29049a475fce);
+            
+        
+
+        marker_b77519d4b8aa2f4da5a97c11ccd5498b.bindPopup(popup_ae068f5157a7a399236c378f38158d82)
+        ;
+
+        
+    
+    
+            var marker_2c8e2715d34400e7ffc47448d04d370d = L.marker(
+                [-29.791942, -56.654639],
+                {
+}
+            ).addTo(map_1af0b0cca78589c540a259f9693d6670);
+        
+    
+            var icon_4e9490e86f73205b64919acda196909a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_2c8e2715d34400e7ffc47448d04d370d.setIcon(icon_4e9490e86f73205b64919acda196909a);
+        
+    
+        var popup_bcc92af438c8d12f4536ec0d05646a6b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e617bd24f922be62049c1eecb1a1af52 = $(`<div id="html_e617bd24f922be62049c1eecb1a1af52" style="width: 100.0%; height: 100.0%;">         <b>Endereço:</b> Desconhecido<br>         <b>Status:</b> Ocorrencia<br>         <img src='/static/ocorrencia/-29.791942_-56.654639__id1739285283982__buracourgente__11022025.jpg' width='200px'>         </div>`)[0];
+                popup_bcc92af438c8d12f4536ec0d05646a6b.setContent(html_e617bd24f922be62049c1eecb1a1af52);
+            
+        
+
+        marker_2c8e2715d34400e7ffc47448d04d370d.bindPopup(popup_bcc92af438c8d12f4536ec0d05646a6b)
+        ;
+
+        
+    
+</script>
+</html>

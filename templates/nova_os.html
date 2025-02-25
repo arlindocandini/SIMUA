@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Ordem de Serviço</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            margin: auto;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Nova Ordem de Serviço</h2>
+        <form action="{{ url_for('salvar_os') }}" method="post">
+            <label>Categoria:</label>
+            <input type="text" name="categoria" value="{{ imagem.categoria }}" readonly>
+
+            <label>Urgência:</label>
+            <input type="text" name="status" value="{{ imagem.status }}" readonly>
+
+            <label>Localização:</label>
+            <input type="text" name="localizacao" value="{{ imagem.localizacao }}" readonly>
+
+            <label>Responsável pela execução:</label>
+            <input type="text" name="responsavel" required>
+
+            <label>Prazo para conclusão:</label>
+            <input type="date" name="prazo" required>
+
+            <label>Equipe responsável:</label>
+            <select name="equipe">
+                <option value="Manutenção">Manutenção</option>
+                <option value="Infraestrutura">Infraestrutura</option>
+                <option value="Transporte">Transporte</option>
+            </select>
+
+            <label>Prioridade:</label>
+            <select name="prioridade">
+                <option value="Alta">Alta</option>
+                <option value="Média">Média</option>
+                <option value="Baixa">Baixa</option>
+            </select>
+
+            <label>Observações:</label>
+            <textarea name="observacoes"></textarea>
+
+            <button type="submit">Criar OS</button>
+        </form>
+    </div>
+
+</body>
+</html>

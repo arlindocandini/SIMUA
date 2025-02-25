@@ -1,0 +1,295 @@
+<!DOCTYPE html> 
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Ocorrências</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            display: flex;
+            background-color: #ffffff;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #0a2a18;
+            color: white;
+            padding: 20px;
+            height: 100vh;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+        }
+        .sidebar a:hover {
+            background-color: #1b4428;
+        }
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            background-color: #ffffff;
+            text-align: left;
+        }
+        .stats-container {
+            display: flex;
+            justify-content: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stats-card {
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            font-weight: bold;
+            color: black;
+            width: 140px;
+            font-size: 18px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+        .emergency { background-color: #FF4C4C; color: white; }
+        .urgent { background-color: #FFD700; }
+        .low-urgent { background-color: #4CAF50; color: white; }
+        .non-urgent { background-color: #1E90FF; color: white; }
+        .total { background-color: #D3D3D3; }
+        .in-progress { background-color: #FFA500; color: white; }
+        .completed { background-color: #00FF00; color: white; }
+        .charts-container {
+            display: flex;
+            gap: 20px;
+        }
+        .chart-container {
+            width: 50%;
+            height: 400px;
+        }
+        .os-dashboard {
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Prefeitura</h2>
+        <a href="/">Ocorrências</a>
+        <a href="/ordens">Ordens de Serviço (OS)</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/perfil">Perfil</a>
+        <a href="/cadastro">Cadastrar Usuários</a>
+        <a href="/relatorios">Imprimir Relatórios</a>
+    </div>
+
+    <div class="main-content">
+        <h1>Dashboard Ocorrências</h1>
+        <div class="stats-container">
+            <div class="stats-card emergency" onclick="filterByStatus('Emergência')">Emergência <br><span id="emergency-count">0</span></div>
+            <div class="stats-card urgent" onclick="filterByStatus('Urgente')">Urgente <br><span id="urgent-count">0</span></div>
+            <div class="stats-card non-urgent" onclick="filterByStatus('Não Urgente')">Não Urgente <br><span id="non-urgent-count">0</span></div>
+            <div class="stats-card low-urgent" onclick="filterByStatus('Pouco Urgente')">Pouco Urgente <br><span id="low-urgent-count">0</span></div>
+            <div class="stats-card total" onclick="filterByStatus('Total')">TOTAL <br><span id="total-count">0</span></div>
+        </div>
+        <h2>Revenue Stats</h2>
+        <div class="charts-container">
+            <div class="chart-container">
+                <canvas id="lineChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h2>Categoria Ocorrências</h2>
+                <canvas id="pieChart"></canvas>
+            </div>
+        </div>
+
+        <div class="os-dashboard">
+            <h1>Dashboard Ordem de Serviço Gerada</h1>
+            <div class="stats-container">
+                <div class="stats-card emergency">Alta <br><span id="os-emergency-count">0</span></div>
+                <div class="stats-card urgent">Media <br><span id="os-urgent-count">0</span></div>
+                <!--<div class="stats-card non-urgent">Baixa <br><span id="os-non-urgent-count">0</span></div>-->
+                <div class="stats-card low-urgent">Baixa <br><span id="os-low-urgent-count">0</span></div>
+                <div class="stats-card total">TOTAL OS GERADAS <br><span id="os-total-count">0</span></div>
+                <div class="stats-card in-progress">OS EM ANDAMENTO <br><span id="os-progress-count">0</span></div>
+                <div class="stats-card completed">OS FINALIZADAS <br><span id="os-completed-count">0</span></div>
+            </div>
+            <div class="charts-container">
+                <div class="chart-container">
+                    <canvas id="osLineChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h2>Categoria OS</h2>
+                    <canvas id="osPieChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function filterByStatus(status) {
+            window.location.href = `/ocorrencias?status=${encodeURIComponent(status)}`;
+        }
+
+        fetch('/api/dashboard')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('emergency-count').innerText = data['Emergência'];
+                document.getElementById('urgent-count').innerText = data['Urgente'];
+                document.getElementById('low-urgent-count').innerText = data['Pouco Urgente'];
+                document.getElementById('non-urgent-count').innerText = data['Não Urgente'];
+                document.getElementById('total-count').innerText = data['Total'];
+
+                const ctxPie = document.getElementById('pieChart').getContext('2d');
+                new Chart(ctxPie, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Emergência', 'Urgente', 'Pouco Urgente', 'Não Urgente'],
+                        datasets: [{
+                            data: [data['Emergência'], data['Urgente'], data['Pouco Urgente'], data['Não Urgente']],
+                            backgroundColor: ['#FF4C4C', '#FFD700', '#4CAF50', '#1E90FF']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true
+                    }
+                });
+            })
+            .catch(error => console.error('Erro ao carregar dados do dashboard:', error));
+
+        fetch('/api/ocorrencias')
+            .then(response => response.json())
+            .then(ocorrencias => {
+                const ctxLine = document.getElementById('lineChart').getContext('2d');
+                const labels = [...new Set(ocorrencias.map(occ => occ.data))];
+                const statusTypes = ['Emergência', 'Urgente', 'Pouco Urgente', 'Não Urgente'];
+                const dataSeries = statusTypes.map(status => {
+                    return {
+                        label: status,
+                        data: labels.map(date => {
+                            const count = ocorrencias.filter(occ => occ.data === date && occ.status === status).length;
+                            return count;
+                        }),
+                        borderColor: status === 'Emergência' ? '#FF4C4C' : 
+                                     status === 'Urgente' ? '#FFD700' : 
+                                     status === 'Pouco Urgente' ? '#4CAF50' : '#1E90FF',
+                        fill: false
+                    };
+                });
+
+                new Chart(ctxLine, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: dataSeries
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            })
+            .catch(error => console.error('Erro ao carregar dados das ocorrências:', error));
+
+            fetch('/api/os_dashboard')
+    .then(response => response.json())
+    .then(data => {
+        console.log("Dados do Dashboard OS Recebidos:", data); // DEBUG no console
+
+        if (!data.os_detalhes || data.os_detalhes.length === 0) {
+            console.error("Nenhuma OS encontrada.");
+            return;
+        }
+
+        // Pegando o primeiro elemento da lista, assumindo que ele contém os dados mais recentes
+        let osDados = data.os_detalhes[0];
+
+        // Atualizar os contadores nos cards
+        document.getElementById('os-emergency-count').innerText = osDados['Alta'] || 0;
+        document.getElementById('os-urgent-count').innerText = osDados['Média'] || 0;
+        document.getElementById('os-low-urgent-count').innerText = osDados['Baixa'] || 0;
+        document.getElementById('os-total-count').innerText = osDados['Total OS'] || 0;
+        document.getElementById('os-progress-count').innerText = osDados['OS Em Andamento'] || 0;
+        document.getElementById('os-completed-count').innerText = osDados['OS Finalizadas'] || 0;
+
+        // Criando gráfico de pizza (Distribuição por prioridade)
+        const ctxOsPie = document.getElementById('osPieChart').getContext('2d');
+        new Chart(ctxOsPie, {
+            type: 'doughnut',
+            data: {
+                labels: ['Alta', 'Média', 'Baixa'],
+                datasets: [{
+                    data: [osDados['Alta'] || 0, osDados['Média'] || 0, osDados['Baixa'] || 0],
+                    backgroundColor: ['#FF4C4C', '#FFD700', '#4CAF50']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true
+            }
+        });
+
+        // Criando gráfico de linha (Evolução ao longo do tempo)
+        const osLabels = data.os_detalhes.map(os => os.data); // Pegando as datas
+        const osDataSeries = ['Alta', 'Média', 'Baixa', 'Total OS', 'OS Em Andamento', 'OS Finalizadas'].map(prioridade => {
+            return {
+                label: prioridade,
+                data: data.os_detalhes.map(os => os[prioridade] || 0),
+                borderColor: prioridade === 'Alta' ? '#FF4C4C' : 
+                             prioridade === 'Média' ? '#FFD700' : 
+                             prioridade === 'Baixa' ? '#4CAF50' :
+                             prioridade === 'Total OS' ? '#A0A0A0' :
+                             prioridade === 'OS Em Andamento' ? '#FFA500' : '#00FF00',
+                fill: false
+            };
+        });
+
+        const ctxOsLine = document.getElementById('osLineChart').getContext('2d');
+        new Chart(ctxOsLine, {
+            type: 'line',
+            data: {
+                labels: osLabels,
+                datasets: osDataSeries
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Prioridade e Status das OS'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Data'
+                        }
+                    }
+                }
+            }
+        });
+    })
+    .catch(error => console.error("Erro ao carregar dados do dashboard de OS:", error));
+
+    function atualizarOcorrencias() {
+    fetch('/api/ocorrencias')
+        .then(response => response.json())
+        .then(dados => {
+            console.log("🔄 Atualizando ocorrências automaticamente...");
+            location.reload();  // Recarrega a página para mostrar novas ocorrências
+        })
+        .catch(error => console.error("❌ Erro ao atualizar ocorrências:", error));
+}
+
+// Atualizar a cada 30 segundos
+setInterval(atualizarOcorrencias, 5000);
+
+
+
+
+
+    </script>
+</body>
+</html>
