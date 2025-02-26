@@ -105,10 +105,10 @@
         <div class="os-dashboard">
             <h1>Dashboard Ordem de Serviço Gerada</h1>
             <div class="stats-container">
-                <div class="stats-card emergency">Emergência <br><span id="os-emergency-count">0</span></div>
-                <div class="stats-card urgent">Urgente <br><span id="os-urgent-count">0</span></div>
-                <div class="stats-card non-urgent">Não Urgente <br><span id="os-non-urgent-count">0</span></div>
-                <div class="stats-card low-urgent">Pouco Urgente <br><span id="os-low-urgent-count">0</span></div>
+                <div class="stats-card emergency">Alta <br><span id="os-emergency-count">0</span></div>
+                <div class="stats-card urgent">Media <br><span id="os-urgent-count">0</span></div>
+                <!--<div class="stats-card non-urgent">Baixa <br><span id="os-non-urgent-count">0</span></div>-->
+                <div class="stats-card low-urgent">Baixa <br><span id="os-low-urgent-count">0</span></div>
                 <div class="stats-card total">TOTAL OS GERADAS <br><span id="os-total-count">0</span></div>
                 <div class="stats-card in-progress">OS EM ANDAMENTO <br><span id="os-progress-count">0</span></div>
                 <div class="stats-card completed">OS FINALIZADAS <br><span id="os-completed-count">0</span></div>
@@ -191,62 +191,105 @@
             })
             .catch(error => console.error('Erro ao carregar dados das ocorrências:', error));
 
-        fetch('/api/os_dashboard')
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('os-emergency-count').innerText = data['Emergência'];
-                document.getElementById('os-urgent-count').innerText = data['Urgente'];
-                document.getElementById('os-low-urgent-count').innerText = data['Pouco Urgente'];
-                document.getElementById('os-non-urgent-count').innerText = data['Não Urgente'];
-                document.getElementById('os-total-count').innerText = data['Total OS'];
-                document.getElementById('os-progress-count').innerText = data['OS Em Andamento'];
-                document.getElementById('os-completed-count').innerText = data['OS Finalizadas'];
+            fetch('/api/os_dashboard')
+    .then(response => response.json())
+    .then(data => {
+        console.log("Dados do Dashboard OS Recebidos:", data); // DEBUG no console
 
-                const ctxOsPie = document.getElementById('osPieChart').getContext('2d');
-                new Chart(ctxOsPie, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Emergência', 'Urgente', 'Pouco Urgente', 'Não Urgente'],
-                        datasets: [{
-                            data: [data['Emergência'], data['Urgente'], data['Pouco Urgente'], data['Não Urgente']],
-                            backgroundColor: ['#FF4C4C', '#FFD700', '#4CAF50', '#1E90FF']
-                        }]
+        if (!data.os_detalhes || data.os_detalhes.length === 0) {
+            console.error("Nenhuma OS encontrada.");
+            return;
+        }
+
+        // Pegando o primeiro elemento da lista, assumindo que ele contém os dados mais recentes
+        let osDados = data.os_detalhes[0];
+
+        // Atualizar os contadores nos cards
+        document.getElementById('os-emergency-count').innerText = osDados['Alta'] || 0;
+        document.getElementById('os-urgent-count').innerText = osDados['Média'] || 0;
+        document.getElementById('os-low-urgent-count').innerText = osDados['Baixa'] || 0;
+        document.getElementById('os-total-count').innerText = osDados['Total OS'] || 0;
+        document.getElementById('os-progress-count').innerText = osDados['OS Em Andamento'] || 0;
+        document.getElementById('os-completed-count').innerText = osDados['OS Finalizadas'] || 0;
+
+        // Criando gráfico de pizza (Distribuição por prioridade)
+        const ctxOsPie = document.getElementById('osPieChart').getContext('2d');
+        new Chart(ctxOsPie, {
+            type: 'doughnut',
+            data: {
+                labels: ['Alta', 'Média', 'Baixa'],
+                datasets: [{
+                    data: [osDados['Alta'] || 0, osDados['Média'] || 0, osDados['Baixa'] || 0],
+                    backgroundColor: ['#FF4C4C', '#FFD700', '#4CAF50']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true
+            }
+        });
+
+        // Criando gráfico de linha (Evolução ao longo do tempo)
+        const osLabels = data.os_detalhes.map(os => os.data); // Pegando as datas
+        const osDataSeries = ['Alta', 'Média', 'Baixa', 'Total OS', 'OS Em Andamento', 'OS Finalizadas'].map(prioridade => {
+            return {
+                label: prioridade,
+                data: data.os_detalhes.map(os => os[prioridade] || 0),
+                borderColor: prioridade === 'Alta' ? '#FF4C4C' : 
+                             prioridade === 'Média' ? '#FFD700' : 
+                             prioridade === 'Baixa' ? '#4CAF50' :
+                             prioridade === 'Total OS' ? '#A0A0A0' :
+                             prioridade === 'OS Em Andamento' ? '#FFA500' : '#00FF00',
+                fill: false
+            };
+        });
+
+        const ctxOsLine = document.getElementById('osLineChart').getContext('2d');
+        new Chart(ctxOsLine, {
+            type: 'line',
+            data: {
+                labels: osLabels,
+                datasets: osDataSeries
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Prioridade e Status das OS'
+                        }
                     },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: true
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Data'
+                        }
                     }
-                });
+                }
+            }
+        });
+    })
+    .catch(error => console.error("Erro ao carregar dados do dashboard de OS:", error));
 
-                const ctxOsLine = document.getElementById('osLineChart').getContext('2d');
-                const osLabels = [...new Set(data.os_detalhes.map(os => os.data))];
-                const osDataSeries = ['Emergência', 'Urgente', 'Pouco Urgente', 'Não Urgente'].map(status => {
-                    return {
-                        label: status,
-                        data: osLabels.map(date => {
-                            const count = data.os_detalhes.filter(os => os.data === date && os.status === status).length;
-                            return count;
-                        }),
-                        borderColor: status === 'Emergência' ? '#FF4C4C' : 
-                                     status === 'Urgente' ? '#FFD700' : 
-                                     status === 'Pouco Urgente' ? '#4CAF50' : '#1E90FF',
-                        fill: false
-                    };
-                });
+    function atualizarOcorrencias() {
+    fetch('/api/ocorrencias')
+        .then(response => response.json())
+        .then(dados => {
+            console.log("🔄 Atualizando ocorrências automaticamente...");
+            location.reload();  // Recarrega a página para mostrar novas ocorrências
+        })
+        .catch(error => console.error("❌ Erro ao atualizar ocorrências:", error));
+}
 
-                new Chart(ctxOsLine, {
-                    type: 'line',
-                    data: {
-                        labels: osLabels,
-                        datasets: osDataSeries
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false
-                    }
-                });
-            })
-            .catch(error => console.error('Erro ao carregar dados do dashboard de OS:', error));
+// Atualizar a cada 30 segundos
+setInterval(atualizarOcorrencias, 5000);
+
+
+
+
+
     </script>
 </body>
 </html>

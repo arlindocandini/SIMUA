@@ -1,0 +1,48 @@
+[
+    {
+        "id": 1,
+        "categoria": "BURACO NA PISTA",
+        "status": "Finalizada",
+        "localizacao": "-16.6950, -49.2500",
+        "responsavel": "",
+        "prazo": "",
+        "equipe": "Manutenção",
+        "prioridade": "Alta",
+        "observacoes": "",
+        "data_criacao": "26/02/2025",
+        "data_os": "26/02/2025",
+        "data_prazo": "",
+        "data_finalizacao": "26/02/2025"
+    },
+    {
+        "id": 2,
+        "categoria": "BURACO NA PISTA",
+        "status": "Finalizada",
+        "localizacao": "-16.7050, -49.2600",
+        "endereco": "Rua 1142, Setor Marista, Goiânia, Região Geográfica Imediata de Goiânia, Região Geográfica Intermediária de Goiânia, Goiás, Região Centro-Oeste, 74180-050, Brasil",
+        "responsavel": "",
+        "prazo": "",
+        "equipe": "Manutenção",
+        "prioridade": "Alta",
+        "observacoes": "",
+        "data_criacao": "26/02/2025",
+        "data_os": "26/02/2025",
+        "data_prazo": "",
+        "data_finalizacao": "26/02/2025"
+    },
+    {
+        "id": 3,
+        "categoria": "BUEIRO",
+        "status": "Em andamento",
+        "localizacao": "-16.7100, -49.2300",
+        "endereco": "Avenida Deputado Jamel Cecilio, Jardim Goiás, Goiânia, Região Geográfica Imediata de Goiânia, Região Geográfica Intermediária de Goiânia, Goiás, Região Centro-Oeste, 74815-745, Brasil",
+        "responsavel": "",
+        "prazo": "",
+        "equipe": "Manutenção",
+        "prioridade": "Alta",
+        "observacoes": "",
+        "data_criacao": "26/02/2025",
+        "data_os": "26/02/2025",
+        "data_prazo": ""
+    }
+]
