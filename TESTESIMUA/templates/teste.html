@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Ocorrências</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+</head>
+<style>body {
+    display: flex;
+    background-color: #ffffff;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #0a2a18;
+    color: white;
+    padding: 20px;
+    height: 100vh;
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+}
+
+.sidebar a:hover {
+    background-color: #1b4428;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #ffffff;
+    text-align: left;
+}
+
+.stats-container {
+    display: flex;
+    justify-content: flex-start;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.stats-card {
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    font-weight: bold;
+    color: black;
+    width: 140px;
+    font-size: 18px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.emergency { background-color: #FF4C4C; color: white; }
+.urgent { background-color: #FFD700; }
+.low-urgent { background-color: #4CAF50; color: white; }
+.non-urgent { background-color: #1E90FF; color: white; }
+.total { background-color: #D3D3D3; }
+.in-progress { background-color: #FFA500; color: white; }
+.completed { background-color: #00FF00; color: white; }
+
+.charts-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.chart-container {
+    width: 48%;
+    height: 400px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.os-dashboard {
+    margin-top: 40px;
+}</style>
+
+<body>
+    <div class="sidebar">
+        <h2>Prefeitura</h2>
+        <a href="/">Ocorrências</a>
+        <a href="/ordens">Ordens de Serviço (OS)</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/perfil">Perfil</a>
+        <a href="/cadastro">Cadastrar Usuários</a>
+        <a href="/relatorios">Imprimir Relatórios</a>
+    </div>
+
+    <div class="main-content">
+        <h1>Dashboard Ocorrências</h1>
+        <div class="stats-container">
+            <div class="stats-card emergency" onclick="filterByStatus('Emergência')">Emergência <br><span id="emergency-count">12</span></div>
+            <div class="stats-card urgent" onclick="filterByStatus('Urgente')">Urgente <br><span id="urgent-count">25</span></div>
+            <div class="stats-card non-urgent" onclick="filterByStatus('Não Urgente')">Não Urgente <br><span id="non-urgent-count">40</span></div>
+            <div class="stats-card low-urgent" onclick="filterByStatus('Pouco Urgente')">Pouco Urgente <br><span id="low-urgent-count">18</span></div>
+            <div class="stats-card total" onclick="filterByStatus('Total')">TOTAL <br><span id="total-count">95</span></div>
+        </div>
+
+        <h2>Gráficos de Ocorrências</h2>
+        <div class="charts-container">
+            <div class="chart-container">
+                <canvas id="lineChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h2>Categoria Ocorrências</h2>
+                <canvas id="pieChart"></canvas>
+            </div>
+        </div>
+
+        <div class="os-dashboard">
+            <h1>Dashboard Ordem de Serviço Gerada</h1>
+            <div class="stats-container">
+                <div class="stats-card emergency">Alta <br><span id="os-emergency-count">8</span></div>
+                <div class="stats-card urgent">Média <br><span id="os-urgent-count">15</span></div>
+                <div class="stats-card non-urgent">Baixa <br><span id="os-non-urgent-count">30</span></div>
+                <div class="stats-card total">TOTAL OS GERADAS <br><span id="os-total-count">53</span></div>
+                <div class="stats-card in-progress">OS EM ANDAMENTO <br><span id="os-progress-count">20</span></div>
+                <div class="stats-card completed">OS FINALIZADAS <br><span id="os-completed-count">33</span></div>
+            </div>
+            <div class="charts-container">
+                <div class="chart-container">
+                    <canvas id="osLineChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h2>Categoria OS</h2>
+                    <canvas id="osPieChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>document.addEventListener('DOMContentLoaded', function() {
+        // Dados fictícios para gráficos
+        const ocorrenciasData = {
+            labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+            datasets: [
+                {
+                    label: 'Emergência',
+                    data: [12, 19, 3, 5, 2, 3],
+                    borderColor: '#FF4C4C',
+                    fill: false
+                },
+                {
+                    label: 'Urgente',
+                    data: [7, 11, 5, 8, 3, 6],
+                    borderColor: '#FFD700',
+                    fill: false
+                },
+                {
+                    label: 'Pouco Urgente',
+                    data: [3, 5, 8, 12, 6, 9],
+                    borderColor: '#4CAF50',
+                    fill: false
+                },
+                {
+                    label: 'Não Urgente',
+                    data: [10, 14, 6, 7, 4, 8],
+                    borderColor: '#1E90FF',
+                    fill: false
+                }
+            ]
+        };
+    
+        const ocorrenciasPieData = {
+            labels: ['Emergência', 'Urgente', 'Pouco Urgente', 'Não Urgente'],
+            datasets: [{
+                data: [12, 25, 18, 40],
+                backgroundColor: ['#FF4C4C', '#FFD700', '#4CAF50', '#1E90FF']
+            }]
+        };
+    
+        const osPieData = {
+            labels: ['Alta', 'Média', 'Baixa'],
+            datasets: [{
+                data: [8, 15, 30],
+                backgroundColor: ['#FF4C4C', '#FFD700', '#4CAF50']
+            }]
+        };
+    
+        const osLineData = {
+            labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+            datasets: [
+                {
+                    label: 'Alta',
+                    data: [2, 3, 1, 4, 2, 3],
+                    borderColor: '#FF4C4C',
+                    fill: false
+                },
+                {
+                    label: 'Média',
+                    data: [5, 7, 6, 8, 4, 6],
+                    borderColor: '#FFD700',
+                    fill: false
+                },
+                {
+                    label: 'Baixa',
+                    data: [10, 12, 8, 9, 7, 10],
+                    borderColor: '#4CAF50',
+                    fill: false
+                }
+            ]
+        };
+    
+        // Renderização dos gráficos
+        const ctxLine = document.getElementById('lineChart').getContext('2d');
+        new Chart(ctxLine, {
+            type: 'line',
+            data: ocorrenciasData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    
+        const ctxPie = document.getElementById('pieChart').getContext('2d');
+        new Chart(ctxPie, {
+            type: 'doughnut',
+            data: ocorrenciasPieData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    
+        const ctxOsPie = document.getElementById('osPieChart').getContext('2d');
+        new Chart(ctxOsPie, {
+            type: 'doughnut',
+            data: osPieData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    
+        const ctxOsLine = document.getElementById('osLineChart').getContext('2d');
+        new Chart(ctxOsLine, {
+            type: 'line',
+            data: osLineData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    });</script>
+</body>
+</html>
