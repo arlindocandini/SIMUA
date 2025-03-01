@@ -3,199 +3,279 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <title>Ocorrências</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-        body {
-            display: flex;
-            background-color: #f4f4f4;
-            height: 100vh;
-        }
-        .sidebar {
-            width: 250px;
-            background: #0a2a18;
-            color: white;
-            padding: 20px;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .sidebar h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .sidebar a {
-            color: white;
-            text-decoration: none;
-            display: block;
-            padding: 10px;
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
-        .sidebar a:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-        .main-content {
-            flex: 1;
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            margin: 20px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        .header {
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        .table-container {
-            width: 100%;
-            overflow-x: auto;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        th, td {
-            padding: 12px;
-            text-align: center;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background: #1b4428;
-            color: white;
-        }
-        td img {
-            width: 50px;
-            height: 50px;
-            border-radius: 5px;
-        }
-        .status {
-            padding: 5px 10px;
-            border-radius: 5px;
-            color: white;
-            font-weight: bold;
-            text-align: center;
-        }
-        .status-urgente { background-color: yellow; color: black; }
-        .status-emergencia { background-color: red; }
-        .status-pouco-urgente { background-color: green; }
-        .status-nao-urgente { background-color: blue; }
-        .status-indefinido { background-color: gray; }
-        .button {
-            padding: 8px 12px;
-            background-color: #1b4428;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .button:hover {
-            background-color: #0a2a18;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
 
-        /* Estilização do Modal */
-        .modal {
-        display: none;
-        position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-    }
-    
-    .modal-content {
-        background-color: white;
-        width: 40%;
-        margin: 10% auto;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
+body {
+    display: flex;
+    min-height: 100vh;
+}
 
-    .modal-header {
-        display: flex;
-        justify-content: space-between;
-        font-size: 20px;
-        font-weight: bold;
-    }
+.sidebar {
+    width: 250px;
+    background-color: #0a2a18;
+    color: white;
+    padding: 20px;
+    height: 100vh; /* Altura total da viewport */
+    position: fixed; /* Fixa a barra lateral */
+    top: 0;
+    left: 0;
+    overflow-y: auto; /* Permite rolagem se o conteúdo for muito longo */
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
 
-    .modal-body {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-    }
+.sidebar h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
 
-    .form-group {
-        display: flex;
-        flex-direction: column;
-    }
+.sidebar h2 .logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 10%;
+}
 
-    .form-group label {
-        font-weight: bold;
-        margin-bottom: 5px;
-    }
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
 
-    input, select, textarea {
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
+.sidebar a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+}
 
-    textarea {
-        resize: none;
-    }
+.sidebar a i {
+    font-size: 18px;
+    width: 24px;
+    text-align: center;
+}
 
-    .modal-footer {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 15px;
-    }
+.sidebar a i.fa-home { color: #FFD700; }
+.sidebar a i.fa-list { color: #4CAF50; }
+.sidebar a i.fa-chart-line { color: #1E90FF; }
+.sidebar a i.fa-user { color: #FF4C4C; }
+.sidebar a i.fa-users { color: #FFA500; }
+.sidebar a i.fa-print { color: #00FF00; }
+.sidebar a i.fa-map { color: #FF6347; }
+.sidebar a i.fa-video { color: #8A2BE2; }
 
-    .btn-confirm {
-        background-color: green;
-        color: white;
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
+.main-content {
+    margin-left: 250px; /* Espaço para a barra lateral */
+    flex: 1;
+    padding: 20px;
+    background-color: #ffffff;
+    overflow-y: auto; /* Permite rolagem no conteúdo principal */
+}
 
-    .btn-cancel {
-        background-color: red;
-        color: white;
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
+.header {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
 
-    .btn-confirm:hover, .btn-cancel:hover {
-        opacity: 0.8;
-    }
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background: #1b4428;
+    color: white;
+}
+
+td img {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+}
+
+.status {
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+.status-urgente { background-color: yellow; color: black; }
+.status-emergencia { background-color: red; }
+.status-pouco-urgente { background-color: green; }
+.status-nao-urgente { background-color: blue; }
+.status-indefinido { background-color: gray; }
+
+.button {
+    padding: 8px 12px;
+    background-color: #1b4428;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #0a2a18;
+}
+
+/* Estilização do Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: white;
+    width: 40%;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.modal-body {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input, select, textarea {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+textarea {
+    resize: none;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.btn-confirm {
+    background-color: green;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-cancel {
+    background-color: red;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-confirm:hover, .btn-cancel:hover {
+    opacity: 0.8;
+}
     </style>
 </head>
 <body>
     <div class="sidebar">
-        <h2>Prefeitura</h2>
-        <a href="{{ url_for('dashboard') }}">Dashboard</a>
-        <a href="{{ url_for('index') }}">Ocorrências</a>
-        <a href="{{ url_for('ordens') }}">Ordens de Serviços (OS)</a>
-        <a href="#">Perfil</a>
-        <a href="#">Cadastrar Usuários</a>
-        <a href="#">Imprimir Relatórios</a>
+        <h2>
+            <img src="static/imagens/logo.png" alt="Logo" class="logo"> <!-- Adicionando a logo -->
+            Prefeitura
+        </h2>
+        <a href="/">
+            <i class="fas fa-home"></i>
+            Ocorrências
+        </a>
+        <a href="/ordens">
+            <i class="fas fa-list"></i>
+            Ordens de Serviço (OS)
+        </a>
+        <a href="/dashboard">
+            <i class="fas fa-chart-line"></i>
+            Dashboard
+        </a>
+        <a href="/mapa"> <!-- Novo botão: Mapa -->
+            <i class="fas fa-map"></i>
+            Mapa
+        </a>
+        <a href="/cameras"> <!-- Novo botão: Câmeras -->
+            <i class="fas fa-video"></i>
+            Câmeras
+        </a>
+        <a href="/perfil">
+            <i class="fas fa-user"></i>
+            Perfil
+        </a>
+        <a href="/cadastro">
+            <i class="fas fa-users"></i>
+            Cadastrar Usuários
+        </a>
+        <a href="/relatorios">
+            <i class="fas fa-print"></i>
+            Imprimir Relatórios
+        </a>
     </div>
 
     <div class="main-content">
@@ -213,10 +293,10 @@
                         <th>Ação</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id = "tabela-ocorrencias" >
                     {% for img in imagens %}
                     <tr>
-                        <td><img src="{{ url_for('buraco_urgente', filename=img.arquivo) }}" alt="Ocorrência"></td>
+                        <td><img src="{{ url_for('Pasta_final', filename=img.arquivo) }}" alt="Ocorrência"></td>
                         <td>{{ img.localizacao }}</td>
                         <td>{{ img.id }}</td>
                         <td>{{ img.categoria }}</td>
@@ -300,7 +380,7 @@
     </div>
 </div>
 
-    <script>
+<script>
     function abrirModal(localizacao, categoria, status) {
         document.getElementById("osLocalizacao").value = localizacao;
         document.getElementById("osCategoria").value = categoria;
@@ -337,6 +417,110 @@
         })
         .catch(error => console.error("Erro ao salvar OS:", error));
     }
-    </script>
+
+    // Cache para evitar chamadas repetidas ao Nominatim
+    const enderecoCache = {};
+
+    // Função para buscar endereço usando Nominatim (OpenStreetMap)
+    async function getEnderecoNominatim(lat, lon) {
+        const key = `${lat},${lon}`;
+
+        // Verifica se já está no cache
+        if (enderecoCache[key]) {
+            console.log(`✅ Cache encontrado para: ${lat}, ${lon} → ${enderecoCache[key]}`);
+            return enderecoCache[key];
+        }
+
+        console.log(`🔍 Buscando endereço para: ${lat}, ${lon}`);
+
+        try {
+            const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+            const data = await response.json();
+
+            if (data.address) {
+                // Formata o endereço de forma compacta
+                const enderecoFormatado = formatarEnderecoCompacto(data.address);
+                enderecoCache[key] = enderecoFormatado; // Armazena no cache
+                return enderecoFormatado;
+            } else {
+                console.warn(`⚠️ Nenhum endereço encontrado para: ${lat}, ${lon}`);
+                return `Coordenadas: (${lat}, ${lon})`;
+            }
+        } catch (error) {
+            console.error("❌ Erro ao buscar endereço:", error);
+            return `Erro ao buscar endereço (${lat}, ${lon})`;
+        }
+    }
+
+    // Função para formatar o endereço de forma compacta (estilo Google Maps)
+    function formatarEnderecoCompacto(endereco) {
+        const { road, house_number, neighbourhood, suburb, city, town, village, postcode, state } = endereco;
+
+        // Define a cidade (prioriza "city", depois "town", depois "village")
+        const cidade = city || town || village;
+
+        // Monta o endereço no formato: Rua + Número, Bairro - Cidade - Estado, CEP
+        const partesEndereco = [
+            road ? road + (house_number ? `, ${house_number}` : "") : null, // Rua e número (se disponível)
+            neighbourhood || suburb, // Bairro ou subúrbio
+            cidade, // Cidade
+            state, // Estado
+            postcode ? `, ${postcode}` : null // CEP (se disponível)
+        ].filter(Boolean); // Remove valores nulos/undefined
+
+        return partesEndereco.join(" - ");
+    }
+
+    // Função para atualizar a tabela de ocorrências
+    async function atualizarOcorrencias() {
+        try {
+            const response = await fetch('/api/ocorrencias');
+            const dados = await response.json();
+
+            const tabela = document.getElementById('tabela-ocorrencias');
+            if (!tabela) {
+                console.error("Erro: Elemento 'tabela-ocorrencias' não encontrado!");
+                return;
+            }
+
+            tabela.innerHTML = ""; // Limpa a tabela antes de adicionar os novos dados
+
+            for (const ocorrencia of dados) {
+                const linha = document.createElement('tr');
+
+                // Criando a estrutura da linha com célula de endereço vazia inicialmente
+                linha.innerHTML = `
+                    <td><img src="/static/Pasta_final/${ocorrencia.arquivo}" width="50"/></td>
+                    <td class="endereco">Carregando...</td> <!-- Endereço será atualizado aqui -->
+                    <td>${ocorrencia.id}</td>
+                    <td>${ocorrencia.categoria}</td>
+                    <td style="background-color: ${ocorrencia.cor_status}; padding: 5px; color: white;">${ocorrencia.status}</td>
+                    <td>${ocorrencia.data}</td>
+                    <td><button class="button" onclick="abrirModal('${ocorrencia.localizacao}', '${ocorrencia.categoria}', '${ocorrencia.status}')">Gerar OS</button></td>
+                `;
+
+                tabela.appendChild(linha);
+
+                // Extraindo latitude e longitude da string da localização
+                const coordenadas = ocorrencia.localizacao.split(", ").map(Number);
+                if (coordenadas.length === 2 && !isNaN(coordenadas[0]) && !isNaN(coordenadas[1])) {
+                    const endereco = await getEnderecoNominatim(coordenadas[0], coordenadas[1]);
+                    linha.querySelector(".endereco").innerText = endereco;
+                } else {
+                    console.warn(`⚠️ Coordenadas inválidas para: ${ocorrencia.localizacao}`);
+                    linha.querySelector(".endereco").innerText = `Coordenadas: ${ocorrencia.localizacao}`;
+                }
+            }
+        } catch (error) {
+            console.error("Erro ao atualizar ocorrências:", error);
+        }
+    }
+
+    // Atualiza automaticamente a cada 30 segundos
+    setInterval(atualizarOcorrencias, 30000);
+
+    // Atualiza na primeira carga
+    atualizarOcorrencias();
+</script>
 </body>
 </html>

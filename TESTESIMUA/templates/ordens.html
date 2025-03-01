@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <title>Ordens de Serviço</title>
     <style>
         * {
@@ -18,32 +19,76 @@
         }
 
         .sidebar {
-            width: 250px;
-            background-color: #0a2a18;
-            color: white;
-            padding: 20px;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+    width: 250px;
+    background-color: #0a2a18;
+    color: white;
+    padding: 20px;
+    height: 100vh; /* Altura total da viewport */
+    position: fixed; /* Fixa a barra lateral */
+    top: 0;
+    left: 0;
+    overflow-y: auto; /* Permite rolagem se o conteúdo for muito longo */
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
 
-        .sidebar h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+.sidebar h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
 
-        .sidebar a {
-            color: white;
-            text-decoration: none;
-            display: block;
-            padding: 10px;
-            border-radius: 5px;
-            transition: 0.3s;
-        }
+.sidebar h2 .logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 10%;
+}
 
-        .sidebar a:hover {
-            background-color: #1b4428;
-        }
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+
+.sidebar a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+.sidebar a i {
+    font-size: 18px;
+    width: 24px;
+    text-align: center;
+}
+
+.sidebar a i.fa-home { color: #FFD700; }
+.sidebar a i.fa-list { color: #4CAF50; }
+.sidebar a i.fa-chart-line { color: #1E90FF; }
+.sidebar a i.fa-user { color: #FF4C4C; }
+.sidebar a i.fa-users { color: #FFA500; }
+.sidebar a i.fa-print { color: #00FF00; }
+.sidebar a i.fa-map { color: #FF6347; }
+.sidebar a i.fa-video { color: #8A2BE2; }
+
+
+.status-urgente { background-color: yellow; color: black; }
+.status-emergencia { background-color: red; }
+.status-pouco-urgente { background-color: green; }
+.status-nao-urgente { background-color: blue; }
+.status-indefinido { background-color: gray; }
+
 
         .content {
             flex: 1;
@@ -221,15 +266,55 @@
     font-weight: bold;
 }
 
+.content {
+    margin-left: 250px; /* Espaço para a barra lateral */
+    flex: 1;
+    padding: 20px;
+    background-color: #ffffff;
+    overflow-y: auto; /* Permite rolagem no conteúdo principal */
+}
+
     </style>
 </head>
 <body>
     <!-- Barra lateral -->
     <div class="sidebar">
-        <h2>Prefeitura</h2>
-        <a href="{{ url_for('dashboard') }}">Dashboard</a>
-        <a href="{{ url_for('index') }}">Ocorrências</a>
-        <a href="{{ url_for('ordens') }}">Ordens de Serviços (OS)</a>
+        <h2>
+            <img src="static/imagens/logo.png" alt="Logo" class="logo"> <!-- Adicionando a logo -->
+            Prefeitura
+        </h2>
+        <a href="/">
+            <i class="fas fa-home"></i>
+            Ocorrências
+        </a>
+        <a href="/ordens">
+            <i class="fas fa-list"></i>
+            Ordens de Serviço (OS)
+        </a>
+        <a href="/dashboard">
+            <i class="fas fa-chart-line"></i>
+            Dashboard
+        </a>
+        <a href="/mapa"> <!-- Novo botão: Mapa -->
+            <i class="fas fa-map"></i>
+            Mapa
+        </a>
+        <a href="/cameras"> <!-- Novo botão: Câmeras -->
+            <i class="fas fa-video"></i>
+            Câmeras
+        </a>
+        <a href="/perfil">
+            <i class="fas fa-user"></i>
+            Perfil
+        </a>
+        <a href="/cadastro">
+            <i class="fas fa-users"></i>
+            Cadastrar Usuários
+        </a>
+        <a href="/relatorios">
+            <i class="fas fa-print"></i>
+            Imprimir Relatórios
+        </a>
     </div>
 
     <!-- Conteúdo principal -->

@@ -1,0 +1,61 @@
+/* sidebar.css */
+.sidebar {
+    width: 250px;
+    background-color: #0a2a18;
+    color: white;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    overflow-y: auto;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar h2 .logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 10%;
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+
+.sidebar a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+.sidebar a i {
+    font-size: 18px;
+    width: 24px;
+    text-align: center;
+}
+
+.sidebar a i.fa-home { color: #FFD700; }
+.sidebar a i.fa-list { color: #4CAF50; }
+.sidebar a i.fa-chart-line { color: #1E90FF; }
+.sidebar a i.fa-user { color: #FF4C4C; }
+.sidebar a i.fa-users { color: #FFA500; }
+.sidebar a i.fa-print { color: #00FF00; }
+.sidebar a i.fa-map { color: #FF6347; }
+.sidebar a i.fa-video { color: #8A2BE2; }
